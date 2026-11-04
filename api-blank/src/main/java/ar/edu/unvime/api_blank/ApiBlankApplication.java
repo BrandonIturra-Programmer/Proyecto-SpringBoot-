@@ -9,4 +9,4 @@ public class ApiBlankApplication {
 		SpringApplication.run(ApiBlankApplication.class, args);
 	}
 
-}
+} 
