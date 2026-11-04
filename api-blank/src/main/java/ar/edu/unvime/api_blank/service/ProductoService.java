@@ -2,6 +2,8 @@ package ar.edu.unvime.api_blank.service;
 
 import ar.edu.unvime.api_blank.client.DummyJsonClient;
 import ar.edu.unvime.api_blank.dto.ProductoDto;
+import ar.edu.unvime.api_blank.exception.RecursoNoEncontradoException;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,7 +27,7 @@ public class ProductoService {
     public ProductoDto obtenerPorId(Long id) {
         Map<String, Object> rawProduct = dummyJsonClient.obtenerProductoPorId(id);
         if (rawProduct == null || rawProduct.isEmpty()) {
-            throw new RuntimeException("Producto no encontrado en la API externa");
+            throw new RecursoNoEncontradoException("Producto no encontrado en la API externa");
         }
         return mapearADto(rawProduct);
     }

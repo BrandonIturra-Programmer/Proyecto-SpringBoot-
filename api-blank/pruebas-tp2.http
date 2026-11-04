@@ -1,0 +1,136 @@
+@baseUrl = http://localhost:8080
+
+### Crear lista (exito: 201)
+# @name listaA
+POST {{baseUrl}}/api/listas
+Content-Type: application/json
+
+{
+  "nombre": "Regalos"
+}
+
+### Crear lista con nombre vacio (error: 400)
+POST {{baseUrl}}/api/listas
+Content-Type: application/json
+
+{
+  "nombre": ""
+}
+
+### Listar listas (exito: 200)
+GET {{baseUrl}}/api/listas
+
+### Obtener una lista (exito: 200)
+GET {{baseUrl}}/api/listas/{{listaA.response.body.id}} 
+
+### Obtener lista inexistente (error: 404)
+GET {{baseUrl}}/api/listas/999999
+
+### Favoritos de una lista (exito: 200)
+GET {{baseUrl}}/api/listas/{{listaA.response.body.id}}/favoritos
+
+### Favoritos de lista inexistente (error: 404)
+GET {{baseUrl}}/api/listas/999999/favoritos
+
+###############################################
+# FAVORITOS CON LISTA
+###############################################
+
+### Crear favorito en la lista (exito: 201)
+POST {{baseUrl}}/api/favoritos
+Content-Type: application/json
+
+{
+  "productoId": 1,
+  "notaPersonal": "Para regalar",
+  "listaId": {{listaA.response.body.id}}
+}
+
+### Crear favorito con lista inexistente (error: 404)
+POST {{baseUrl}}/api/favoritos
+Content-Type: application/json
+
+{
+  "productoId": 1,
+  "notaPersonal": "Lista que no existe",
+  "listaId": 999999
+}
+
+### Crear favorito sin listaId (error: 400)
+POST {{baseUrl}}/api/favoritos
+Content-Type: application/json
+
+{
+  "productoId": 1,
+  "notaPersonal": "Sin lista"
+}
+
+###############################################
+# ELIMINAR LISTA
+###############################################
+
+### Eliminar lista que tiene favoritos (error: 409)
+DELETE {{baseUrl}}/api/listas/{{listaA.response.body.id}}
+
+### Crear lista vacia para borrar
+# @name listaVacia
+POST {{baseUrl}}/api/listas
+Content-Type: application/json
+
+{
+  "nombre": "Lista vacia"
+}
+
+### Eliminar lista vacia (exito: 204)
+DELETE {{baseUrl}}/api/listas/{{listaVacia.response.body.id}}
+
+###############################################
+# MOVER FAVORITOS (transaccion)
+###############################################
+
+### Crear lista destino
+# @name listaB
+POST {{baseUrl}}/api/listas
+Content-Type: application/json
+
+{
+  "nombre": "Destino"
+}
+
+### Mover favoritos de A a B (exito: 204)
+POST {{baseUrl}}/api/listas/{{listaA.response.body.id}}/mover-favoritos
+Content-Type: application/json
+
+{
+  "destinoId": {{listaB.response.body.id}}
+}
+
+### Verificar: los favoritos ahora estan en B (exito: 200)
+GET {{baseUrl}}/api/listas/{{listaB.response.body.id}}/favoritos
+
+### Verificar: la lista A ya no existe (error: 404)
+GET {{baseUrl}}/api/listas/{{listaA.response.body.id}}
+
+### Mover desde lista inexistente (error: 404)
+POST {{baseUrl}}/api/listas/999999/mover-favoritos
+Content-Type: application/json
+
+{
+  "destinoId": {{listaB.response.body.id}}
+}
+
+### Mover a lista inexistente (error: 404)
+POST {{baseUrl}}/api/listas/{{listaB.response.body.id}}/mover-favoritos
+Content-Type: application/json
+
+{
+  "destinoId": 999999
+}
+
+### Mover a la misma lista (error: 409)
+POST {{baseUrl}}/api/listas/{{listaB.response.body.id}}/mover-favoritos
+Content-Type: application/json
+
+{
+  "destinoId": {{listaB.response.body.id}}
+}

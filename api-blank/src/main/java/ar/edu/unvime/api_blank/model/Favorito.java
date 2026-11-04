@@ -7,14 +7,16 @@ public class Favorito {
     private Long productoId;
     private String notaPersonal;
     private LocalDate fechaAgregado;
+    private Long listaId;
 
     public Favorito() {}
 
-    public Favorito(Long id, Long productoId, String notaPersonal, LocalDate fechaAgregado) {
+    public Favorito(Long id, Long productoId, String notaPersonal, LocalDate fechaAgregado, Long listaId){
         this.id = id;
         this.productoId = productoId;
         this.notaPersonal = notaPersonal;
         this.fechaAgregado = fechaAgregado;
+        this.listaId = listaId;
     }
 
     public Long getId() { return id; }
@@ -28,4 +30,7 @@ public class Favorito {
 
     public LocalDate getFechaAgregado() { return fechaAgregado; }
     public void setFechaAgregado(LocalDate fechaAgregado) { this.fechaAgregado = fechaAgregado; }
+
+    public Long getListaId() { return listaId; }
+    public void setListaId(Long listaId) { this.listaId = listaId; }
 }
