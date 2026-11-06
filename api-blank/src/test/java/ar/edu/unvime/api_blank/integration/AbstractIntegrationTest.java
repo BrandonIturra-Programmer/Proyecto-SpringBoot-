@@ -6,19 +6,19 @@ import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.postgresql.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@Testcontainers
-public abstract class AbstractIntegrationTest {
+public abstract class AbstractIntegrationTest { 
 
-    @Container
     static final PostgreSQLContainer postgres =
             new PostgreSQLContainer(DockerImageName.parse("postgres:17"));
+
+    static {
+        postgres.start();
+    } 
 
     @DynamicPropertySource
     static void propiedades(DynamicPropertyRegistry registry) {
@@ -30,3 +30,4 @@ public abstract class AbstractIntegrationTest {
     @Autowired
     protected MockMvc mockMvc;
 }
+ 
