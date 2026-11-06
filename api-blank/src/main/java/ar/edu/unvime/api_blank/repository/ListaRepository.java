@@ -6,6 +6,7 @@ import java.util.Optional;
 
 public interface ListaRepository {
     List<Lista> listarTodas();
+    List<Lista> buscarPorUsuarioId(Long usuarioId);
     Optional<Lista> buscarPorId(Long id);
     Lista guardar(Lista lista);
     void eliminar(Long id);
