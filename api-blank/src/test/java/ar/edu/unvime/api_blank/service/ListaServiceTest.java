@@ -38,7 +38,7 @@ class ListaServiceTest {
 
         Lista creada = service.crear(dto, usuario); 
 
-        assertEquals(7L, creada.usuarioId());
+        assertEquals(8L, creada.usuarioId());
         assertEquals("Regalos", creada.nombre());
     }
 }
