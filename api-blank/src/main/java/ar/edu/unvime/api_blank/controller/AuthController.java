@@ -1,9 +1,12 @@
 package ar.edu.unvime.api_blank.controller;
 
+import ar.edu.unvime.api_blank.dto.LoginRequestDto;
 import ar.edu.unvime.api_blank.dto.RegistroRequestDto;
 import ar.edu.unvime.api_blank.dto.UsuarioResponseDto;
-import ar.edu.unvime.api_blank.model.Usuario;
-import ar.edu.unvime.api_blank.service.UsuarioService;
+import ar.edu.unvime.api_blank.model.Usuario; 
+import ar.edu.unvime.api_blank.dto.TokenResponseDto;
+import ar.edu.unvime.api_blank.service.JwtService;
+import ar.edu.unvime.api_blank.service.UsuarioService; 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -17,9 +20,11 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final UsuarioService usuarioService;
+    private final JwtService jwtService;
 
-    public AuthController(UsuarioService usuarioService) {
+    public AuthController(UsuarioService usuarioService, JwtService jwtService) {
         this.usuarioService = usuarioService;
+        this.jwtService = jwtService;
     }
 
     @PostMapping("/registro")
@@ -29,4 +34,11 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new UsuarioResponseDto(u.id(), u.email(), u.rol()));
     }
+
+    @PostMapping("/login")
+    @Operation(summary = "Iniciar sesión", description = "Valida las credenciales y devuelve un JWT (Código 200). Si son inválidas responde 401")
+    public TokenResponseDto login(@Valid @RequestBody LoginRequestDto dto) {
+        Usuario u = usuarioService.autenticar(dto.getEmail(), dto.getPassword()); 
+        return new TokenResponseDto(jwtService.generarToken(u));
+    } 
 }
