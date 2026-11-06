@@ -14,7 +14,7 @@ import org.testcontainers.utility.DockerImageName;
 @SpringBootTest
 @AutoConfigureMockMvc
 @Testcontainers
-abstract class AbstractIntegrationTest {
+public abstract class AbstractIntegrationTest {
 
     @Container
     static final PostgreSQLContainer postgres =

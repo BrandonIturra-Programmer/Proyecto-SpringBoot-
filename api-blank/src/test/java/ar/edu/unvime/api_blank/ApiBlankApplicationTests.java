@@ -1,11 +1,9 @@
 package ar.edu.unvime.api_blank;
 
+import ar.edu.unvime.api_blank.integration.AbstractIntegrationTest;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class ApiBlankApplicationTests {
-
+class ApiBlankApplicationTests extends AbstractIntegrationTest {
 	@Test
 	void contextLoads() {
 	}
