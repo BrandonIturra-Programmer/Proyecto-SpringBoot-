@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/favoritos")
-@Tag(name = "Favoritos", description = "CRUD guardado en la base")
+@Tag(name = "Favoritos", description = "CRUD guardado en la base. Requieren autenticación")
 public class FavoritoController {
 
     private final FavoritoService service;

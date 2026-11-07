@@ -80,3 +80,9 @@ HTTP.
 JWT solo autentica (¿quién sos?); decidir qué puede hacer cada
 usuario (¿es tuyo?) depende de los datos de la lista, y por eso se resuelve en
 el Service.
+
+## Evidencias del TP3
+
+Las capturas y la documentación del TP3 están en la carpeta [`Evidencias`](Evidencias/). El detalle de cómo correr los tests, leer el CI y los pasos del despliegue.
+
+**Despliegue en Render:** https://proyecto-springboot-cxrt.onrender.com
